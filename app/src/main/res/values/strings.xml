@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AccessData</string>
+    <string name="mainLabel">Content1</string>
+    <string name="secondaryLabel">Content2</string>
+    <string name="success">Write successfully!</string>
+    <string name="excute">Excute</string>
+    <string name="loaded_content">The loaded content</string>
+    <string name="load_success">load successfully!</string>
+    <string name="db_operation">SQLite基本操作</string>
+    <string name="create_database">创建数据库</string>
+    <string name="update_database">更新数据库</string>
+    <string name="insert_data">插入数据</string>
+    <string name="update_data">更新数据</string>
+    <string name="query_data">查询数据</string>
+    <string name="delete_data">删除数据</string>
+    <string name="jump_to_sqlite">testSQLite</string>
+</resources>
