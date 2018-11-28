@@ -3,6 +3,8 @@
     package="com.tpv.mantis.accessdata">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -16,10 +18,18 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SQLiteActivity"></activity>
+        <activity android:name=".SQLiteActivity" />
+        <activity android:name=".ConProvActivity" />
+
+        <provider
+            android:name=".StuContentProvider"
+            android:authorities="com.tpv.StuContentProvider"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

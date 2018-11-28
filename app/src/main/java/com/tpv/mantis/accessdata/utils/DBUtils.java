@@ -52,6 +52,7 @@ public class DBUtils {
             }
         }
     }
+
     public static void load(Context context, String fileName, TextView contentView) {
         Log.d(TAG, "load E");
         try {

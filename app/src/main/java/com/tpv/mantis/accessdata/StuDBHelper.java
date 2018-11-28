@@ -9,17 +9,19 @@ import android.util.Log;
 public class StuDBHelper extends SQLiteOpenHelper {
 
     public static final String TAG = "TestSQLite";
+    public static final String DATABASE_NAME= "student.db";
     public static final int VERSION = 1;
     public static final int SECOND_VERSION = 2;
+    public static final String TABLE_NAME = "stu_table";
 
     // constructor is a must
-    public StuDBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public StuDBHelper(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createSql = "create table stu_table(id int, sname varchar(20), sage int, sgender varchar(10), sheight real)";
+        String createSql = "create table " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, STU_NAME varchar(20), STU_AGE int, STU_GENDER varchar(10), STU_HEIGHT real)";
         Log.d(TAG, "==>create table");
         sqLiteDatabase.execSQL(createSql);
     }
@@ -27,6 +29,8 @@ public class StuDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         Log.d(TAG, "==>update database");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 
     @Override

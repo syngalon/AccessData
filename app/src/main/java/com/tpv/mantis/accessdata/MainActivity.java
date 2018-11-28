@@ -18,9 +18,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText input2;
     private Button workBtn;
     private Button jumpSQLiteBtn;
+    private Button jumpContentProviderBtn;
     private TextView contentView;
 
-    private final static int REQUEST_WRITE_SDCARD = 1550;
+    private final static int REQUEST_PERMISSION = 1550;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void requestSinglePermission() {
         String writeExternalStoragePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        String readContactPermission = Manifest.permission.READ_CALENDAR;
+        String writeContactPermission = Manifest.permission.WRITE_CONTACTS;
+
         int hasWriteExternalStoragePermission = checkSelfPermission(writeExternalStoragePermission);
-        String[] permissions = new String[]{writeExternalStoragePermission};
-        if (!(hasWriteExternalStoragePermission == PackageManager.PERMISSION_GRANTED)) {
-            requestPermissions(permissions, REQUEST_WRITE_SDCARD);
+        int hasReadContactPermission = checkSelfPermission(readContactPermission);
+        int hasWriteContactPermission = checkSelfPermission(writeContactPermission);
+
+        String[] permissions = new String[]{writeExternalStoragePermission, readContactPermission, writeContactPermission};
+        if (hasWriteExternalStoragePermission == PackageManager.PERMISSION_DENIED
+                || hasReadContactPermission == PackageManager.PERMISSION_DENIED
+                || hasWriteContactPermission == PackageManager.PERMISSION_DENIED) {
+            requestPermissions(permissions, REQUEST_PERMISSION);
         }
     }
 
@@ -49,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         workBtn.setOnClickListener(this);
         jumpSQLiteBtn = findViewById(R.id.jumpBtn);
         jumpSQLiteBtn.setOnClickListener(this);
+        jumpContentProviderBtn = findViewById(R.id.conProvBtn);
+        jumpContentProviderBtn.setOnClickListener(this);
         contentView = findViewById(R.id.contentView);
     }
 
@@ -61,9 +72,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DBUtils.saveToSdcard(this, input2);
                 break;
             case R.id.jumpBtn:
-                Intent jumpIntent = new Intent();
-                jumpIntent.setClass(this, SQLiteActivity.class);
-                this.startActivity(jumpIntent);
+                Intent jumpSQLiteIntent = new Intent();
+                jumpSQLiteIntent.setClass(this, SQLiteActivity.class);
+                this.startActivity(jumpSQLiteIntent);
+                break;
+            case R.id.conProvBtn:
+                Intent jumpConProvIntent = new Intent();
+                jumpConProvIntent.setClass(this, ConProvActivity.class);
+                this.startActivity(jumpConProvIntent);
+                break;
         }
     }
 }

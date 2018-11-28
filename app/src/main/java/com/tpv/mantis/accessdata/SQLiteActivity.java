@@ -40,60 +40,61 @@ public class SQLiteActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.createBtn:{
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 break;
             }
             case R.id.updateDbBtn:{
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 break;
             }
             case R.id.insertBtn:{
                 Log.d(StuDBHelper.TAG, "==>insert data");
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues stuInfo = new ContentValues();
-                stuInfo.put("id", 1);
-                stuInfo.put("sname", "Syngalon");
-                stuInfo.put("sage", 30);
-                stuInfo.put("sgender", "male");
-                stuInfo.put("sheight", 172.5);
-                db.insert("stu_table", null, stuInfo);
+                stuInfo.put("_id", 1);
+                stuInfo.put("STU_NAME", "Syngalon");
+                stuInfo.put("STU_AGE", 30);
+                stuInfo.put("STU_GENDER", "male");
+                stuInfo.put("STU_HEIGHT", 172.5);
+                db.insert(StuDBHelper.TABLE_NAME, null, stuInfo);
                 db.close();
                 break;
             }
             case R.id.modifyBtn:{
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues newStuInfo = new ContentValues();
-                newStuInfo.put("sheight", 175.2);
-                String whereClause = "id=?";
+                newStuInfo.put("STU_HEIGHT", 175.2);
+                String whereClause = "_id=?";
                 String [] whereArgs = {String.valueOf(1)};
-                db.update("stu_table", newStuInfo, whereClause, whereArgs);
+                db.update(StuDBHelper.TABLE_NAME, newStuInfo, whereClause, whereArgs);
                 db.close();
                 break;
             }
             case R.id.queryBtn:{
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor cursor = db.query("stu_table", new String[]{"id", "sname", "sage", "sgender", "sheight"}, "id=?", new String[]{"1"}, null, null, null);
+                Cursor cursor = db.query(StuDBHelper.TABLE_NAME, new String[]{"_id", "STU_NAME", "STU_AGE", "STU_GENDER", "STU_HEIGHT"}, "_id=?", new String[]{"1"}, null, null, null);
                 while (cursor.moveToNext()) {
-                    String name = cursor.getString(cursor.getColumnIndex("sname"));
-                    String age = cursor.getString(cursor.getColumnIndex("sage"));
-                    String gender = cursor.getString(cursor.getColumnIndex("sgender"));
-                    String height = cursor.getString(cursor.getColumnIndex("sheight"));
+                    String name = cursor.getString(cursor.getColumnIndex("STU_NAME"));
+                    String age = cursor.getString(cursor.getColumnIndex("STU_AGE"));
+                    String gender = cursor.getString(cursor.getColumnIndex("STU_GENDER"));
+                    String height = cursor.getString(cursor.getColumnIndex("STU_HEIGHT"));
                     Log.d(StuDBHelper.TAG, "==>name: " + name + ", age: " + age + ", gender: " + gender + ", height: " + height);
                 }
+                cursor.close();
                 db.close();
                 break;
             }
             case R.id.deleteBtn:{
-                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this, "stu_db", null, StuDBHelper.SECOND_VERSION);
+                StuDBHelper dbHelper = new StuDBHelper(SQLiteActivity.this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                String whereClause = "id=?";
+                String whereClause = "_id=?";
                 String [] whereArgs = {String.valueOf(2)};
-                db.delete("stu_table", whereClause, whereArgs);
+                db.delete(StuDBHelper.TABLE_NAME, whereClause, whereArgs);
                 db.close();
                 break;
             }

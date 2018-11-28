@@ -14,4 +14,10 @@
     <string name="query_data">查询数据</string>
     <string name="delete_data">删除数据</string>
     <string name="jump_to_sqlite">testSQLite</string>
+    <string name="test_content_provider">ContentProvider测试</string>
+    <string name="read_contact">读取联系人</string>
+    <string name="contact_field">Contact content</string>
+    <string name="update_contact" >修改联系人</string>
+    <string name="get_student_info">读取学生信息</string>
+    <string name="insert_student_info">插入学生信息</string>
 </resources>
